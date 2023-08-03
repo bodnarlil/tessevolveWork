@@ -19,22 +19,22 @@ frame.attr("height", frame_height);
 // Shift the canvas and make it slightly smaller than the svg canvas
 canvas.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// create x axis
-var xScale = d3.scaleLog().domain([100, 1e5]).range([0, canvas_width]);  
+// create x axis (change this domain)
+var xScale = d3.scaleLinear().domain([0, 100]).range([0, canvas_width]);  
 var xAxis = d3.axisBottom(xScale);
 canvas.append("g")
   .attr("class", "x axis")
   .attr("transform", "translate(0," + canvas_height + ")")
   .call(xAxis);
 
-// create y axis
-var yScale = d3.scaleLinear().domain([10, 85]).range([canvas_height, 0]);
+// create y axis (change this domain)
+var yScale = d3.scaleLinear().domain([0, 100]).range([canvas_height, 0]);
 var yAxis = d3.axisLeft(yScale);
 canvas.append("g")
   .attr("class", "y axis")
   .call(yAxis);
 
-// function
+// function (change the whole line below)
 d3.csv("http://alackles.github.io/D3-visualising-data/resources/nations.csv", accessor).then(function(nations) {
     // make canvas
     var data_canvas = canvas.append("g")
