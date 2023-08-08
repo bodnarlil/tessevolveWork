@@ -25,9 +25,12 @@
     <label><input type="checkbox" name="dimension" class="dimension" value="4D" checked="checked"/> 4D</label>
   <br>
     <!-- lineage data -->
-    <label><input type="checkbox" name="lieage" class="lineage" value="showLineage" checked="checked"/> show lineage</label>
+    <label><input type="checkbox" name="lineage" class="lineage" value="showLineage" checked="checked"/> show lineage</label>
     <label><input type="checkbox" name="lineage" class="lieage" value="landscapeOnly" checked="checked"/> landscape only</label>
 <br> <br> <br>
+
+<!--- how do you make the sliders only register select numbers while the space between them is not the same? for exmple, going between 0.1, 0.01, and 0.001? you cannot make step ay one number because the difference between 0.1 and 0.01 and 0.01 and 0.001 is not the same. --->
+
     <!-- mutation rate (change step) -->
     mutation rate slider
     <input type="range" name="range" class="slider" id="mut_rate_slider" value="0.01" min="0.0001" max="0.1" step="0.0001" ><br>
