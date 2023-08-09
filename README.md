@@ -1,4 +1,9 @@
 # tessevolveWork
 this is the repository for my work on the tessevolve project
-- checkboxes instead of drop-down menu items
+- checkboxes and sliders instead of drop-down menu items
+      + create checkboxes and sliders
+      + connect them to the main page to get them to do something
+      + connect them to the tessevolve project and have them do something there
 - combining the .csv data files
+      + get all the fils combined within dimension
+      + connect all three dimensions
