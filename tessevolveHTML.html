@@ -16,32 +16,33 @@
     <!-- data type -->
     <label><input type="checkbox" name="data" class="author" value="CF1" checked="checked"/> CF1</label>
     <label><input type="checkbox" name="data" class="author" value="CF2" checked="checked"/> CF2</label>
-    <label><input type="checkbox" name="data" class="author" value="shubert" checked="checked"/> shubert</label>
-    <label><input type="checkbox" name="data" class="author" value="vincent" checked="checked"/> vincent</label>
-<br>
+    <label><input type="checkbox" name="data" class="author" value="shubert" checked="checked"/> Shubert</label>
+    <label><input type="checkbox" name="data" class="author" value="vincent" checked="checked"/> Vincent</label>
+  <br>
     <!-- data dimension -->
     <label><input type="checkbox" name="dimension" class="dimension" value="2D" checked="checked"/> 2D</label>
     <label><input type="checkbox" name="dimension" class="dimension" value="3D" checked="checked"/> 3D</label>
     <label><input type="checkbox" name="dimension" class="dimension" value="4D" checked="checked"/> 4D</label>
   <br>
     <!-- lineage data -->
-    <label><input type="checkbox" name="lineage" class="lineage" value="showLineage" checked="checked"/> show lineage</label>
-    <label><input type="checkbox" name="lineage" class="lieage" value="landscapeOnly" checked="checked"/> landscape only</label>
-<br> <br> <br>
+    <label><input type="checkbox" name="lineage" class="lineage" value="showLineage" checked="checked"/> Show Lineage</label>
+    <label><input type="checkbox" name="lineage" class="lieage" value="landscapeOnly" checked="checked"/> Landscape Only</label>
+  <br> <br> <br>
 
 <!--- how do you make the sliders only register select numbers while the space between them is not the same? for example, going between 0.1, 0.01, and 0.001? you cannot make step any one number because 0.1 - 0.01 != 0.01 - 0.001 --->
 
     <!-- mutation rate (change step) -->
-    mutation rate slider
-    <input type="range" name="range" class="slider" id="mut_rate_slider" value="0.01" min="0.0001" max="0.1" step="0.0001" ><br>
-<br>
+    Mutation Rate
+    <input type="range" name="range" class="slider" id="mut_rate_slider" value="0.01" min="0.0001" max="0.1" step="0.0001">
+  <br>
+   
     <!-- tournament size (change step) -->
-    tournament size slider
+    Tournament Size
     <input type="range" name="range" class="slider" id="tourn_size_slider" value="4" min="2" max="16" step="2" ><br>
-<br>
-    <!-- replicate to view -->
-    replicate to view slider
-    <input type="range" name="range" class="slider" id="rep_to_view_slider" value="5" min="1" max="10" step="1" ><br>
+  <br>
+
+    <!-- replicate to view (looked at code from here: https://blog.hubspot.com/website/html-slider-->
+      <div class="slider"><label for="replicate">Replicate to View </label><input type="range" min="0" max="10" value="5" id="replicate" step="1" list="reptoview"><datalist id="reptoview"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></datalist></div> 
 
   </body>
 </html>
