@@ -34,10 +34,35 @@ canvas.append("g")
   .attr("class", "y axis")
   .call(yAxis);
 
+// add an accessor here
+// accessor
+var accessor = function(d){ 
+    return {
+        x0: d.x0,
+        x1: d.x1,
+        x2: d.x2,
+        fitness: d.fitness,
+        file: +d.file,
+        dimension: +d.dimension
+    };
+}
+
 // function (change the whole line below)
-d3.csv("http://alackles.github.io/D3-visualising-data/resources/nations.csv", accessor).then(function(nations) {
+d3.csv("https://github.com/bodnarlil/tessevolveWork/blob/main/combined/combined_allResults_minus_4D_data.csv", accessor).then(function(data) {
+    // slider for mutation rate
+    var mut_rate = parseInt(document.getElementById("mut_rate_slider").value);
+    // slider for tournament size
+    var tourn_size = parseInt(document.getElementById("tourn_size_slider").value);
+    // slider for replicate
+    var rep = parseInt(document.getElementById("replicate").value);
+
     // make canvas
     var data_canvas = canvas.append("g")
       .attr("class", "data_canvas");
+
+    // try to display data that is checked
+    d3.selectAll(".author")[0].filter(function(cb){return this.value == data.author})[0];
+    d3.selectAll(".dimension")[0].filter(function(cb){return this.value == data.dimension})[0];
+    d3.selectAll(".lineage")[0].filter(function(cb){return this.value == data.lineage})[0];
   }
 );
