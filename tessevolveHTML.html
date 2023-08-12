@@ -6,6 +6,7 @@
   </head>
 
   <body>
+    <!--- title --->
     <center><h1>Testing for Tessevolve</h1></center>
 
     <div id="chart_area"></div>
@@ -13,45 +14,50 @@
     <script src="http://d3js.org/d3.v7.min.js"></script>
     <script src="main.js"></script>
 
-<!--- goal: connect the checkboxes to the main.java so that I can actually do stuff when each box is checked vs unchecked --->
-    <!-- data type -->
-    <label><input type="checkbox" name="data" class="author" value="CF1" checked="checked" title="Would you like to display data from Composition Function Data 1?"/> CF1</label>
-    <label><input type="checkbox" name="data" class="author" value="CF2" checked="checked" title="Would you like to display data from Composition Function Data 2?"/> CF2</label>
-    <label><input type="checkbox" name="data" class="author" value="shubert" checked="checked" title="Would you like to display Shubert data?"/> Shubert</label>
-    <label><input type="checkbox" name="data" class="author" value="vincent" checked="checked" title="Would you like to display Vincent data?"/> Vincent</label>
-  <br>
-    <!-- data dimension -->
-    <label><input type="checkbox" name="dimension" class="dimension" value="2D" checked="checked" title="Would you like to display 2D data?"/> 2D</label>
-    <label><input type="checkbox" name="dimension" class="dimension" value="3D" checked="checked" title="Would you like to display 3D data?"/> 3D</label>
-    <label><input type="checkbox" name="dimension" class="dimension" value="4D" checked="checked" title="Would you like to display 4D data?"/> 4D</label>
-  <br>
-    <!-- lineage data -->
-    <label><input type="checkbox" name="lineage" class="lineage" value="showLineage" checked="checked" title="Would you like to display lineage data?"/> Show Lineage</label>
-    <label><input type="checkbox" name="lineage" class="lieage" value="landscapeOnly" checked="checked" title="Would you like to hide lineage data?"/> Landscape Only</label>
-  <br> <br> <br>
-
-<!--- how do you make the sliders only register select numbers while the space between them is not the same? for example, going between 0.1, 0.01, and 0.001? you cannot make step any one number because 0.1 - 0.01 != 0.01 - 0.001 --->
-
-    <!-- mutation rate (change step) -->
-    Mutation Rate
-    <input type="range" name="range" class="slider" id="mut_rate_slider" value="0.01" min="0.0001" max="0.1" step="0.0001"
-    title="Mutations to x and y coordinates are chosen from a normal distribution. This number, scaled by the x and y domains of the function, determines the standard deviation of that function.">
+    <!--- goal: connect the checkboxes to the main.java so that I can actually do stuff when each box is checked vs unchecked --->
+    
+    <!-- select data type(s) using check boxes -->
+    <label><input type="checkbox" name="data" class="author" value="CF1" checked="checked"
+      title="Would you like to display data from Composition Function Data 1?"/> CF1</label>
+    <label><input type="checkbox" name="data" class="author" value="CF2" checked="checked"
+      title="Would you like to display data from Composition Function Data 2?"/> CF2</label>
+    <label><input type="checkbox" name="data" class="author" value="shubert" checked="checked"
+      title="Would you like to display Shubert data?"/> Shubert</label>
+    <label><input type="checkbox" name="data" class="author" value="vincent" checked="checked"
+      title="Would you like to display Vincent data?"/> Vincent</label>
     <br>
+
+    <!-- choose data dimension(s) using check boxes -->
+    <label><input type="checkbox" name="dimension" class="dimension" value="2D" checked="checked"
+      title="Would you like to display 2D data?"/> 2D</label>
+    <label><input type="checkbox" name="dimension" class="dimension" value="3D" checked="checked"
+      title="Would you like to display 3D data?"/> 3D</label>
+    <label><input type="checkbox" name="dimension" class="dimension" value="4D" checked="checked"
+      title="Would you like to display 4D data?"/> 4D</label>
+    <br>
+
+    <!-- decide whether to display lineage data using a checkbox-->
+    <label><input type="checkbox" name="lineage" class="lineage" value="showLineage" checked="checked"
+      title="Would you like to display lineage data?"/> Show Lineage</label>
+    <br> <br>
+
+    <!--- design three sliders to choose mutation rate, tournament size, and replicate to view --->
+    <!--- ????? how do you make the sliders only register select numbers while the space between them is not the same? for example, going between 0.1, 0.01, and 0.001? you cannot make step any one number because 0.1 - 0.01 != 0.01 - 0.001 --->
+
     <!-- mutation rate to view (looked at code from here: https://blog.hubspot.com/website/html-slider) -->
-    <!--- test mutation rate (values should be 0.0001, 0.001, 0.01, and 0.1. not 0, 1, 2, 3-->
-    <div class="slider"><label for="range">Mutation Rate </label><input type="range" min="0.0001" max="0.1" value="0.01" id="mut_rate_slider" step="0.0001" list="mutRateToView" title="Mutations to x and y coordinates are chosen from a normal distribution. This number, scaled by the x and y domains of the function, determines the standard deviation of that function."><datalist id="mutRateToView"><option>0.0001</option><option>0.001</option><option>0.01</option><option>0.1</option></datalist></div> 
+    <div class="slider"><label for="range">Mutation Rate </label><input type="range" min="0.0001" max="0.1" value="0.01" id="mut_rate_slider" step="0.0001" list="mutRateToView"
+      title="Mutations to x and y coordinates are chosen from a normal distribution. This number, scaled by the x and y domains of the function, determines the standard deviation of that function.">
+      <datalist id="mutRateToView"><option>0.0001</option><option>0.001</option><option>0.01</option><option>0.1</option></datalist></div> 
 
-    <!-- tournament size (change step) -->
-    Tournament Size
-    <input type="range" name="tournSize" class="slider" id="tourn_size_slider" value="4" min="2" max="16" step="2" 
-    title="In tournament selection, a number of individuals are randomly chosen from the population and the one with the highest fitness reproduces. This variable determines the number of individuals in these groups."><br>
-    <br>
     <!-- tournament size (looked at code from here: https://blog.hubspot.com/website/html-slider) -->
-    <!--- test tourn size (values should be 2, 4, 8, and 16. not 0, 1, 2, 3) -->
-    <div class="slider"><label for="tourn">Tournament Size </label><input type="range" min="2" max="16" value="4" id="tourn_size_slider" step="1" list="tournToView" title="In tournament selection, a number of individuals are randomly chosen from the population and the one with the highest fitness reproduces. This variable determines the number of individuals in these groups."><datalist id="tournToView"><option>2</option><option>4</option><option>8</option><option>16</option></datalist></div> 
+    <div class="slider"><label for="tourn">Tournament Size </label><input type="range" min="2" max="16" value="4" id="tourn_size_slider" step="1" list="tournToView"
+      title="In tournament selection, a number of individuals are randomly chosen from the population and the one with the highest fitness reproduces. This variable determines the number of individuals in these groups.">
+      <datalist id="tournToView"><option>2</option><option>4</option><option>8</option><option>16</option></datalist></div> 
 
     <!-- replicate to view (looked at code from here: https://blog.hubspot.com/website/html-slider) -->
-    <div class="slider"><label for="replicate">Replicate to View </label><input type="range" min="0" max="10" value="5" id="replicate" step="1" list="reptoview"title="Each condition has 10 replicates. Select the replicate number you want to view."><datalist id="reptoview"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></datalist></div> 
+    <div class="slider"><label for="replicate">Replicate to View </label><input type="range" min="0" max="10" value="5" id="replicate" step="1" list="reptoview"
+      title="Each condition has 10 replicates. Select the replicate number you want to view.">
+      <datalist id="reptoview"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></datalist></div> 
 
   </body>
 </html>
