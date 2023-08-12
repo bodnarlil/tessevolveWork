@@ -65,9 +65,17 @@ d3.csv("https://github.com/bodnarlil/tessevolveWork/blob/main/combined/combined_
     d3.selectAll(".lineage")[0].filter(function(cb){return this.value == data.lineage})[0];
 
     // try to dispay what each slider is at from https://stackoverflow.com/questions/29103818/how-can-i-retrieve-and-display-slider-range-value
-    function getSliderValue (){
-      var val = document.getElementById("tourn_size_slider").value //gets the oninput value
-      document.getElementById('output').innerHTML = val //displays this value to the html page
+    function getMutRateValue (){
+      var mutRate = document.getElementById("mut_rate").value //gets the oninput value
+      document.getElementById('output').innerHTML = mutRate //displays this value to the html page
+    }
+    function getTournSizeValue (){
+      var tournSize = document.getElementById("tourn_size_slider").value //gets the oninput value
+      document.getElementById('output').innerHTML = tournSize //displays this value to the html page
+    }
+    function getReplicateValue (){
+      var replicate = document.getElementById("rep").value //gets the oninput value
+      document.getElementById('output').innerHTML = replicate //displays this value to the html page
     }
 
   }
