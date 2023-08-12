@@ -35,7 +35,7 @@ canvas.append("g")
   .call(yAxis);
 
 // add an accessor here
-// accessor
+// accessor (not the right one)
 var accessor = function(d){ 
     return {
         x0: d.x0,
@@ -55,7 +55,6 @@ d3.csv("https://github.com/bodnarlil/tessevolveWork/blob/main/combined/combined_
     var tourn_size = parseInt(document.getElementById("tourn_size_slider").value);
     // slider for replicate
     var rep = parseInt(document.getElementById("replicate").value);
-
     // make canvas
     var data_canvas = canvas.append("g")
       .attr("class", "data_canvas");
@@ -64,5 +63,12 @@ d3.csv("https://github.com/bodnarlil/tessevolveWork/blob/main/combined/combined_
     d3.selectAll(".author")[0].filter(function(cb){return this.value == data.author})[0];
     d3.selectAll(".dimension")[0].filter(function(cb){return this.value == data.dimension})[0];
     d3.selectAll(".lineage")[0].filter(function(cb){return this.value == data.lineage})[0];
+
+    // try to dispay what each slider is at from https://stackoverflow.com/questions/29103818/how-can-i-retrieve-and-display-slider-range-value
+    function getSliderValue (){
+      var val = document.getElementById("tourn_size_slider").value //gets the oninput value
+      document.getElementById('output').innerHTML = val //displays this value to the html page
+    }
+
   }
 );

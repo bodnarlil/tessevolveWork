@@ -16,7 +16,7 @@
 
     <!--- goal: connect the checkboxes to the main.java so that I can actually do stuff when each box is checked vs unchecked --->
     
-    <!-- select data type(s) using check boxes -->
+    <!-- select data type(s) using checkboxes -->
     <label><input type="checkbox" name="data" class="author" value="CF1" checked="checked"
       title="Would you like to display data from Composition Function Data 1?"/> CF1</label>
     <label><input type="checkbox" name="data" class="author" value="CF2" checked="checked"
@@ -25,9 +25,9 @@
       title="Would you like to display Shubert data?"/> Shubert</label>
     <label><input type="checkbox" name="data" class="author" value="vincent" checked="checked"
       title="Would you like to display Vincent data?"/> Vincent</label>
-    <br>
+    <br> <!--- this adds a new line --->
 
-    <!-- choose data dimension(s) using check boxes -->
+    <!-- choose data dimension(s) using checkboxes -->
     <label><input type="checkbox" name="dimension" class="dimension" value="2D" checked="checked"
       title="Would you like to display 2D data?"/> 2D</label>
     <label><input type="checkbox" name="dimension" class="dimension" value="3D" checked="checked"
@@ -39,25 +39,27 @@
     <!-- decide whether to display lineage data using a checkbox-->
     <label><input type="checkbox" name="lineage" class="lineage" value="showLineage" checked="checked"
       title="Would you like to display lineage data?"/> Show Lineage</label>
-    <br> <br>
+    <br>
+    <br>
 
     <!--- design three sliders to choose mutation rate, tournament size, and replicate to view --->
     <!--- ????? how do you make the sliders only register select numbers while the space between them is not the same? for example, going between 0.1, 0.01, and 0.001? you cannot make step any one number because 0.1 - 0.01 != 0.01 - 0.001 --->
+    <!-- looked at code from here: https://blog.hubspot.com/website/html-slider for all three sliders-->
 
-    <!-- mutation rate to view (looked at code from here: https://blog.hubspot.com/website/html-slider) -->
+    <!--- mut rate --->
     <div class="slider"><label for="range">Mutation Rate </label><input type="range" min="0.0001" max="0.1" value="0.01" id="mut_rate_slider" step="0.0001" list="mutRateToView"
       title="Mutations to x and y coordinates are chosen from a normal distribution. This number, scaled by the x and y domains of the function, determines the standard deviation of that function.">
       <datalist id="mutRateToView"><option>0.0001</option><option>0.001</option><option>0.01</option><option>0.1</option></datalist></div> 
 
-    <!-- tournament size (looked at code from here: https://blog.hubspot.com/website/html-slider) -->
+    <!--- tourn size --->
     <div class="slider"><label for="tourn">Tournament Size </label><input type="range" min="2" max="16" value="4" id="tourn_size_slider" step="1" list="tournToView"
       title="In tournament selection, a number of individuals are randomly chosen from the population and the one with the highest fitness reproduces. This variable determines the number of individuals in these groups.">
       <datalist id="tournToView"><option>2</option><option>4</option><option>8</option><option>16</option></datalist></div> 
 
-    <!-- replicate to view (looked at code from here: https://blog.hubspot.com/website/html-slider) -->
-    <div class="slider"><label for="replicate">Replicate to View </label><input type="range" min="0" max="10" value="5" id="replicate" step="1" list="reptoview"
+    <!--- rep to view --->
+    <div class="slider"><label for="replicate">Replicate to View </label><input type="range" min="1" max="10" value="5" id="replicate" step="1" list="reptoview"
       title="Each condition has 10 replicates. Select the replicate number you want to view.">
-      <datalist id="reptoview"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></datalist></div> 
+      <datalist id="reptoview"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></datalist></div> 
 
   </body>
 </html>
