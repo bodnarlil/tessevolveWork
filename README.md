@@ -9,3 +9,5 @@ this is the repository for my work on the tessevolve project
 
       + get all the files combined within the three dimensions
       + connect all three dimensions
+
+first, get the checkboxes to work on the main file. second, focus on changing out the csv files
