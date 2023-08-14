@@ -62,19 +62,45 @@ d3.csv("https://github.com/bodnarlil/tessevolveWork/blob/main/combined/combined_
     var tourn_size = document.querySelector('select[id="tourn_size_slider"]').value;
     var rep = document.querySelector('select[id="replicate"]').value;
 
+    var tourny = tourn_size;
+    var seed = rep;
+    var mutrate = mut_rate;
+    var phylo_detail = showLineage;
+    var fcn;
+    // create an if-statement to choose only one box for fcn
+    if(CF1 == checked & CF2 != checked & shubert != checked & vincent != checked){
+        fcn = CF1;
+    } else if (CF2 == checked & CF1 != checked & shubert != checked & vincent != checked){
+        fcn = CF12;
+    } else if (shubert == checked & CF2 != checked & CF1 != checked & vincent != checked){
+        fcn = shubert;
+    } else if (vincent == checked & CF2 != checked & shubert != checked & CF1 != checked){
+        fcn = vincent;
+    } else {
+        // default to CF1
+        fcn = CF1;
+    }
+
+    var dim
+    // create an if-statement to choose only one box for dim
+    if(twoD == checked & threeD != checked & fourD != checked{
+        dim = twoD;
+    } else if (threeD == checked & twoD != checked & fourD != checked){
+        dim = threeD;
+    } else if (fourD == checked & threeD != checked & twoD != checked ){
+        dim = fourD;
+    } else {
+        // default to 3D
+        dim = threeDim;
+    }
+
     // make canvas
     var data_canvas = canvas.append("g")
       .attr("class", "data_canvas");
 
-    // try to display data that is checked
-    /*
-    d3.selectAll(".author")[0].filter(function(cb){return this.value == data.author})[0];
-    d3.selectAll(".dimension")[0].filter(function(cb){return this.value == data.dimension})[0];
-    d3.selectAll(".lineage")[0].filter(function(cb){return this.value == data.lineage})[0];
-    */
-
     // try to dispay what each slider is at from https://stackoverflow.com/questions/29103818/how-can-i-retrieve-and-display-slider-range-value
     function getMutRateValue (){
+      var mut_rate = document.querySelector('select[id="mut_rate_slider"]').value;
       document.getElementById('output').innerHTML = mut_rate //displays this value to the html page
     }
     function getTournSizeValue (){
@@ -83,6 +109,5 @@ d3.csv("https://github.com/bodnarlil/tessevolveWork/blob/main/combined/combined_
     function getReplicateValue (){
       document.getElementById('output').innerHTML = rep //displays this value to the html page
     }
-
   }
 );
