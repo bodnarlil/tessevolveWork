@@ -42,8 +42,8 @@ var accessor = function(d){
         x1: d.x1,
         x2: d.x2,
         fitness: d.fitness,
-        file: +d.file,
-        dimension: +d.dimension
+        file: d.file,
+        dimension: d.dimension
     };
 }
 
