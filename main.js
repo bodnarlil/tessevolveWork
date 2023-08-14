@@ -49,33 +49,39 @@ var accessor = function(d){
 
 // function (change the whole line below)
 d3.csv("https://github.com/bodnarlil/tessevolveWork/blob/main/combined/combined_allResults_minus_4D_data.csv", accessor).then(function(data) {
-    // slider for mutation rate
-    var mut_rate = parseInt(document.getElementById("mut_rate_slider").value);
-    // slider for tournament size
-    var tourn_size = parseInt(document.getElementById("tourn_size_slider").value);
-    // slider for replicate
-    var rep = parseInt(document.getElementById("replicate").value);
+    // get elements
+    var CF1 = document.querySelector('select[value="CF1"]').value;
+    var CF2 = document.querySelector('select[value="CF2"]').value;
+    var shubert = document.querySelector('select[value="shubert"]').value;
+    var vincent = document.querySelector('select[value="vincent"]').value;
+    var twoD = document.querySelector('select[value="2D"]').value;
+    var threeD = document.querySelector('select[value="3D"]').value;
+    var fourD = document.querySelector('select[value="4D"]').value;
+    var showLineage = document.querySelector('select[value="showLineage"]').value;
+    var mut_rate = document.querySelector('select[id="mut_rate_slider"]').value;
+    var tourn_size = document.querySelector('select[id="tourn_size_slider"]').value;
+    var rep = document.querySelector('select[id="replicate"]').value;
+
     // make canvas
     var data_canvas = canvas.append("g")
       .attr("class", "data_canvas");
 
     // try to display data that is checked
+    /*
     d3.selectAll(".author")[0].filter(function(cb){return this.value == data.author})[0];
     d3.selectAll(".dimension")[0].filter(function(cb){return this.value == data.dimension})[0];
     d3.selectAll(".lineage")[0].filter(function(cb){return this.value == data.lineage})[0];
+    */
 
     // try to dispay what each slider is at from https://stackoverflow.com/questions/29103818/how-can-i-retrieve-and-display-slider-range-value
     function getMutRateValue (){
-      var mutRate = document.getElementById("mut_rate").value //gets the oninput value
-      document.getElementById('output').innerHTML = mutRate //displays this value to the html page
+      document.getElementById('output').innerHTML = mut_rate //displays this value to the html page
     }
     function getTournSizeValue (){
-      var tournSize = document.getElementById("tourn_size_slider").value //gets the oninput value
-      document.getElementById('output').innerHTML = tournSize //displays this value to the html page
+      document.getElementById('output').innerHTML = tourn_size //displays this value to the html page
     }
     function getReplicateValue (){
-      var replicate = document.getElementById("rep").value //gets the oninput value
-      document.getElementById('output').innerHTML = replicate //displays this value to the html page
+      document.getElementById('output').innerHTML = rep //displays this value to the html page
     }
 
   }
