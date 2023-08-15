@@ -62,6 +62,26 @@ d3.csv("https://github.com/bodnarlil/tessevolveWork/blob/main/combined/combined_
     var tourn_size = document.querySelector('select[id="tourn_size_slider"]').value;
     var rep = document.querySelector('select[id="replicate"]').value;
 
+    if(mut_rate == 1){
+        mut_rate == 0.1;
+    } else if(mut_rate == 2){
+        mut_rate == 0.01;
+    } else if(mut_rate == 3){
+        mut_rate == 0.001;
+    } else {
+        mut_rate == 0.0001;
+    }
+
+    if(tourn_size == 1){
+        tourn_size == 2;
+    } else if(tourn_size == 2){
+        tourn_size == 4;
+    } else if(tourn_size == 3){
+        tourn_size == 8;
+    } else {
+        tourn_size == 16;
+    }
+    
     var tourny = tourn_size;
     var seed = rep;
     var mutrate = mut_rate;
