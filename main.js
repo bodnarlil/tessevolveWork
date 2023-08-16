@@ -54,15 +54,15 @@ var load_landscape = function() {
 
     // start of my stuff -Lilia
     var seed; var fcn; var dim; var mutrate; var tourny; var phylo_detail;
-    
+
     document.addEventListener("DOMContentLoaded", function() {
-        var CF1 = document.querySelector('input[name="CF1"]').value;
-        var CF2 = document.querySelector('select[name="CF2"]').value;
-        var shubert = document.querySelector('select[name="shubert"]').value;
-        var vincent = document.querySelector('select[name="vincent"]').value;
-        var twoD = document.querySelector('select[name="2D"]').value;
-        var threeD = document.querySelector('select[name="3D"]').value;
-        var fourD = document.querySelector('select[name="4D"]').value;
+        var CF1 = document.querySelector('input[name="CF1"]');
+        var CF2 = document.querySelector('select[name="CF2"]');
+        var shubert = document.querySelector('select[name="shubert"]');
+        var vincent = document.querySelector('select[name="vincent"]');
+        var twoD = document.querySelector('select[name="2D"]');
+        var threeD = document.querySelector('select[name="3D"]');
+        var fourD = document.querySelector('select[name="4D"]');
         var showLineage = document.querySelector('select[name="lineage"]').value;
         var mut_rate = document.querySelector('select[id="mut_rate_slider"]').value;
         var tourn_size = document.querySelector('select[id="tourn_size_slider"]').value;
@@ -95,28 +95,28 @@ var load_landscape = function() {
 
         // create an if-statement to choose only one box for fcn
         if(CF1 == checked && CF2 != checked && shubert != checked && vincent != checked){
-            fcn = CF1;
+            fcn = document.querySelector('input[name="CF1"]').value;
         } else if (CF2 == checked && CF1 != checked && shubert != checked && vincent != checked){
-            fcn = CF12;
+            fcn = document.querySelector('input[name="CF2"]').value;
         } else if (shubert == checked && CF2 != checked && CF1 != checked && vincent != checked){
-            fcn = shubert;
+            fcn = document.querySelector('input[name="shubert"]').value;
         } else if (vincent == checked && CF2 != checked && shubert != checked && CF1 != checked){
-            fcn = vincent;
+            fcn = document.querySelector('input[name="vincent"]').value;
         } else {
             // default to CF1
-            fcn = CF1;
+            fcn = document.querySelector('input[name="CF1"]').value;
         }
 
         // create an if-statement to choose only one box for dim
         if(twoD == checked && threeD != checked && fourD != checked){
-            dim = twoD;
+            dim = document.querySelector('input[name="twoD"]').value;;
         } else if (threeD == checked && twoD != checked && fourD != checked){
-            dim = threeD;
+            dim = document.querySelector('input[name="threeD"]').value;
         } else if (fourD == checked && threeD != checked && twoD != checked ){
-            dim = fourD;
+            dim = document.querySelector('input[name="fourD"]').value;;
         } else {
             // default to 3D
-            dim = threeD;
+            dim = document.querySelector('input[name="threeD"]').value;;
         }
     });
     // end of my stuff -Lilia
