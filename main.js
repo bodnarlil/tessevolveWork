@@ -1,133 +1,263 @@
-// Select the chart area by ID
-var chart_area = d3.select("#chart_area");
-var frame = chart_area.append("svg");
+// TODO: Vincent cmaera rig should be 25 25 25 
 
-// Create canvas inside frame
-var canvas = frame.append("g");
-
-// Set margins, width, and height
-var margin = {top: 19.5, right: 19.5, bottom: 19.5, left: 39.5};
-var frame_width = 960;
-var frame_height = 350;
-var canvas_width = frame_width - margin.left - margin.right;
-var canvas_height = frame_height - margin.top - margin.bottom;
-
-// Set frame attributes width and height
-frame.attr("width", frame_width);
-frame.attr("height", frame_height);
-
-// Shift the canvas and make it slightly smaller than the svg canvas
-canvas.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-// create x axis (change this domain)
-var xScale = d3.scaleLinear().domain([0, 100]).range([0, canvas_width]);  
-var xAxis = d3.axisBottom(xScale);
-canvas.append("g")
-  .attr("class", "x axis")
-  .attr("transform", "translate(0," + canvas_height + ")")
-  .call(xAxis);
-
-// create y axis (change this domain)
-var yScale = d3.scaleLinear().domain([0, 100]).range([canvas_height, 0]);
-var yAxis = d3.axisLeft(yScale);
-canvas.append("g")
-  .attr("class", "y axis")
-  .call(yAxis);
-
-// add an accessor here
-// accessor (not the right one)
-var accessor = function(d){ 
-    return {
-        x0: d.x0,
-        x1: d.x1,
-        x2: d.x2,
-        fitness: d.fitness,
-        file: d.file,
-        dimension: d.dimension
-    };
+// Standard accessor: 2D and 3D
+// https://stackoverflow.com/questions/25412046/d3js-working-with-unknown-headers-number-of-columns-number-of-rows
+var accessor = function(row) {
+   numeric_row = {};
+    for (col in row) {
+        numeric_row[col] = +row[col];
+    }
+    return numeric_row;
 }
 
-// function (change the whole line below)
-d3.csv("https://github.com/bodnarlil/tessevolveWork/blob/main/combined/combined_allResults_minus_4D_data.csv", accessor).then(function(data) {
-    // get elements
-    var CF1 = document.querySelector('select[value="CF1"]').value;
-    var CF2 = document.querySelector('select[value="CF2"]').value;
-    var shubert = document.querySelector('select[value="shubert"]').value;
-    var vincent = document.querySelector('select[value="vincent"]').value;
-    var twoD = document.querySelector('select[value="2D"]').value;
-    var threeD = document.querySelector('select[value="3D"]').value;
-    var fourD = document.querySelector('select[value="4D"]').value;
-    var showLineage = document.querySelector('select[value="showLineage"]').value;
-    var mut_rate = document.querySelector('select[id="mut_rate_slider"]').value;
-    var tourn_size = document.querySelector('select[id="tourn_size_slider"]').value;
-    var rep = document.querySelector('select[id="replicate"]').value;
+var coords = function(x, y, z) {
+    return x + " " + y + " " + z;
+}
 
-    if(mut_rate == 1){
-        mut_rate == 0.1;
-    } else if(mut_rate == 2){
-        mut_rate == 0.01;
-    } else if(mut_rate == 3){
-        mut_rate == 0.001;
-    } else {
-        mut_rate == 0.0001;
+var reload = function() {
+    // Remove default text if it's there 
+    var defaultText = document.getElementById('defaultText');
+    if (defaultText !== null) {
+      defaultText.parentNode.removeChild(defaultText);
     }
 
-    if(tourn_size == 1){
-        tourn_size == 2;
-    } else if(tourn_size == 2){
-        tourn_size == 4;
-    } else if(tourn_size == 3){
-        tourn_size == 8;
-    } else {
-        tourn_size == 16;
+    // Remove previous landscape
+    var spheres = document.querySelectorAll("a-sphere");
+    for (var i = 0; i < spheres.length; i++) {
+        spheres[i].parentNode.removeChild(spheres[i]);
     }
+
+    // Remove LOD nodes
+    var boxes = document.querySelectorAll("a-box");
+    for (var i = 0; i < boxes.length; i++) {
+        boxes[i].parentNode.removeChild(boxes[i]);
+    }
+
+    // Remove meshline
+    var phyloLine = document.getElementById('phyloLine');
+    if (phyloLine !== null) {
+      phyloLine.parentNode.removeChild(phyloLine);
+    }
+}
+
+var load_landscape = function() {
     
-    var tourny = tourn_size;
-    var seed = rep;
-    var mutrate = mut_rate;
-    var phylo_detail = showLineage;
-    var fcn;
-    // create an if-statement to choose only one box for fcn
-    if(CF1 == checked & CF2 != checked & shubert != checked & vincent != checked){
-        fcn = CF1;
-    } else if (CF2 == checked & CF1 != checked & shubert != checked & vincent != checked){
-        fcn = CF12;
-    } else if (shubert == checked & CF2 != checked & CF1 != checked & vincent != checked){
-        fcn = shubert;
-    } else if (vincent == checked & CF2 != checked & shubert != checked & CF1 != checked){
-        fcn = vincent;
-    } else {
-        // default to CF1
-        fcn = CF1;
-    }
+    // look at the labels -> names
+    /*
+    var seed = document.querySelector('select[name="rep"]').value;
+    var fcn = document.querySelector('select[name="function"]').value;
+    var dim = document.querySelector('select[name="dim"]').value;
+    var mutrate = document.querySelector('select[name="mut_rate"]').value;
+    var tourny = document.querySelector('select[name="tour_size"]').value;
+    var phylo_detail = document.querySelector('select[name="phylo"]').value;
+    */
 
-    var dim
-    // create an if-statement to choose only one box for dim
-    if(twoD == checked & threeD != checked & fourD != checked{
-        dim = twoD;
-    } else if (threeD == checked & twoD != checked & fourD != checked){
-        dim = threeD;
-    } else if (fourD == checked & threeD != checked & twoD != checked ){
-        dim = fourD;
-    } else {
-        // default to 3D
-        dim = threeDim;
-    }
+    // start of my stuff -Lilia
+    var seed; var fcn; var dim; var mutrate; var tourny; var phylo_detail;
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        var CF1 = document.querySelector('input[name="CF1"]').value;
+        var CF2 = document.querySelector('select[name="CF2"]').value;
+        var shubert = document.querySelector('select[name="shubert"]').value;
+        var vincent = document.querySelector('select[name="vincent"]').value;
+        var twoD = document.querySelector('select[name="2D"]').value;
+        var threeD = document.querySelector('select[name="3D"]').value;
+        var fourD = document.querySelector('select[name="4D"]').value;
+        var showLineage = document.querySelector('select[name="lineage"]').value;
+        var mut_rate = document.querySelector('select[id="mut_rate_slider"]').value;
+        var tourn_size = document.querySelector('select[id="tourn_size_slider"]').value;
+        var rep = document.querySelector('select[id="replicate"]').value;
 
-    // make canvas
-    var data_canvas = canvas.append("g")
-      .attr("class", "data_canvas");
+        if(mut_rate == 1){
+            mut_rate = 0.1;
+        } else if(mut_rate == 2){
+            mut_rate = 0.01;
+        } else if(mut_rate == 3){
+            mut_rate = 0.001;
+        } else {
+            mut_rate = 0.0001;
+        }
 
-    // try to dispay what each slider is at from https://stackoverflow.com/questions/29103818/how-can-i-retrieve-and-display-slider-range-value
-    function getMutRateValue (){
-      var mut_rate = document.querySelector('select[id="mut_rate_slider"]').value;
-      document.getElementById('output').innerHTML = mut_rate //displays this value to the html page
-    }
-    function getTournSizeValue (){
-      document.getElementById('output').innerHTML = tourn_size //displays this value to the html page
-    }
-    function getReplicateValue (){
-      document.getElementById('output').innerHTML = rep //displays this value to the html page
-    }
-  }
-);
+        if(tourn_size == 1){
+            tourn_size = 2;
+        } else if(tourn_size == 2){
+            tourn_size = 4;
+        } else if(tourn_size == 3){
+            tourn_size = 8;
+        } else {
+            tourn_size = 16;
+        }
+
+        tourny = tourn_size;
+        seed = rep;
+        mutrate = mut_rate;
+        phylo_detail = showLineage;
+
+        // create an if-statement to choose only one box for fcn
+        if(CF1 == checked && CF2 != checked && shubert != checked && vincent != checked){
+            fcn = CF1;
+        } else if (CF2 == checked && CF1 != checked && shubert != checked && vincent != checked){
+            fcn = CF12;
+        } else if (shubert == checked && CF2 != checked && CF1 != checked && vincent != checked){
+            fcn = shubert;
+        } else if (vincent == checked && CF2 != checked && shubert != checked && CF1 != checked){
+            fcn = vincent;
+        } else {
+            // default to CF1
+            fcn = CF1;
+        }
+
+        // create an if-statement to choose only one box for dim
+        if(twoD == checked && threeD != checked && fourD != checked){
+            dim = twoD;
+        } else if (threeD == checked && twoD != checked && fourD != checked){
+            dim = threeD;
+        } else if (fourD == checked && threeD != checked && twoD != checked ){
+            dim = fourD;
+        } else {
+            // default to 3D
+            dim = threeD;
+        }
+    });
+    // end of my stuff -Lilia
+
+    var basepath = "../../tessevolve/data/"; // for web deployment
+    //var basepath = "../../data/" // for local host 
+    var coord_data = basepath + "coords/coords_" + fcn + "_" + dim + "D.csv";
+
+    var replicate_path = basepath + "reps/SEED_" + seed + "__F_" + fcn + "__D_" + dim + "__MUT_" + mutrate + "__T_" + tourny + "/";
+    var node_data =  replicate_path + "lod.csv";
+    var edge_data = replicate_path + "edge.csv";
+
+    var scene = d3.select('a-scene');
+
+    var d3_coord_data = d3.csv(coord_data, accessor);
+    var d3_node_data = d3.csv(node_data, accessor);
+    var d3_edge_data = d3.text(edge_data);
+
+    Promise.all([
+        d3_coord_data,
+        d3_node_data,
+        d3_edge_data,
+        dim,
+        fcn
+    ])
+    .then(
+        function(files) {
+        landscape = files[0];
+        lod = files[1];
+        edges = files[2];
+        dims = files[3];
+        fcn = files[4];
+
+        var fitnessCol = "fitness";
+
+        if (dims == 4) {
+            fitnessCol = "fitness5";
+        }
+        
+        // Set color scale 
+        var set_min = function(fitnessCol) {
+            return d3.min(landscape, function(d) {return d[fitnessCol]});
+        };
+
+        var set_max = function(fitnessCol) {
+            return d3.max(landscape, function(d) {return d[fitnessCol]});
+        };
+
+        var colScale = d3.scaleSequential(d3.interpolatePlasma);
+        colScale.domain([set_min(fitnessCol), set_max(fitnessCol)]);
+
+        // Draw Points 
+        var pts = scene.selectAll('a-sphere')
+            .data(landscape, function(d){return d.x0});
+
+        pts.enter()
+            .append('a-sphere')
+            .attr('class', 'data_point')
+            .attr('position', function(d) {return coords(d.x0, d.x1, d.x2)})
+            .attr('color', function (d) {return colScale(d[fitnessCol])})
+            .attr('radius', 0.1)
+            .attr('opacity', 0.9);
+        
+        // Draw Nodes
+        if (phylo_detail !== "0") {
+
+          const meshline_param = 'lineWidth: 2; path: ' + edges + '; color: grey';
+          
+          var nodes = scene.selectAll('a-box')
+              .data(lod, function(d){return d.id});
+        
+          scene.append('a-entity')
+            .attr('id', "phyloLine")
+            .attr('meshline', meshline_param);
+        
+          nodes.enter()
+            .append('a-box')
+            .attr('class', 'phylo_node')
+            .attr('position', function(d) {return coords(d.x0, d.x1, d.x2)})
+            .attr('height', 0.04)
+            .attr('depth', 0.04)
+            .attr('width', 0.04)
+            .attr('color', function (d) {return colScale(d[fitnessCol])});
+          }
+
+        var colScaleNode = function(d) {
+            if (typeof d == 'undefined' || isNaN(d)) {
+                return "grey"
+            } else {
+                return colScale(d)
+            }
+        }
+
+        var opScaleNode = function(d) {
+            if (typeof d == 'undefined' || isNaN(d)) {
+                return 0.5
+            } else {
+                return 1
+            }
+        }
+
+        // Change colors on scroll
+        var colorDim = 0;
+        var colorChange = function() {
+
+            colorDim -= 0.5
+
+            // Handle different ranges
+            if (fcn == "vincent") {
+                if (colorDim < 0.5) {
+                    colorDim = 10.5;
+                }
+            } else {
+               if (colorDim < -5) {
+                    colorDim = 5;
+               }
+            }   
+            
+            // Set fitness column name
+            var colorDimName = "fitness" + String(colorDim);
+
+            // Change points color
+            scene.selectAll('.data_point')
+                .attr('color', function(d) {return colScale(d[colorDimName])});
+
+            // Change nodes color 
+            scene.selectAll('.phylo_node')
+                .attr('color', function(d) {return colScaleNode(d[colorDimName])})
+                .attr('opacity', function(d) {return opScaleNode(d[colorDimName])});
+        };
+        
+        if (dims == 4) {
+            scene.on("wheel", colorChange);
+        }
+
+        }
+    )
+
+}
+
+var draw = function() {
+  reload();
+  load_landscape();
+}
