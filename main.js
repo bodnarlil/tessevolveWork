@@ -55,7 +55,6 @@ var load_landscape = function() {
     // start of my stuff -Lilia
     var seed; var fcn; var dim; var mutrate; var tourny; var phylo_detail;
 
-    document.addEventListener("DOMContentLoaded", function() {
         var CF1 = document.querySelector('input[name="CF1"]');
         var CF2 = document.querySelector('input[name="CF2"]');
         var shubert = document.querySelector('input[name="shubert"]');
@@ -69,13 +68,13 @@ var load_landscape = function() {
         var rep = document.querySelector('select[id="replicate"]').value;
 
         if(mut_rate == 1){
-            mut_rate = 0.1;
-        } else if(mut_rate == 2){
-            mut_rate = 0.01;
-        } else if(mut_rate == 3){
-            mut_rate = 0.001;
-        } else {
             mut_rate = 0.0001;
+        } else if(mut_rate == 2){
+            mut_rate = 0.001;
+        } else if(mut_rate == 3){
+            mut_rate = 0.01;
+        } else {
+            mut_rate = 0.1;
         }
 
         if(tourn_size == 1){
@@ -93,14 +92,20 @@ var load_landscape = function() {
         mutrate = mut_rate;
         phylo_detail = showLineage;
 
+        // these are not showing up?
+        console.log("showLineage: " + showLineage);
+        console.log("showLineage: " + mut_rate);
+        console.log("showLineage: " + tourn_size);
+        console.log("showLineage: " + rep);
+
         // create an if-statement to choose only one box for fcn
-        if(CF1.checked == true && CF2.checked == false && shubert.checked == false && vincent.checked == false){
+        if(CF1.checked && !CF2.checked && !shubert.checked && !vincent.checked){
             fcn = "CF1";
-        } else if (CF2.checked == true && CF1.checked == false && shubert.checked == false && vincent.checked == false){
+        } else if (CF2.checked && !CF1.checked && !shubert.checked && !vincent.checked ){
             fcn = "CF2";
-        } else if (shubert.checked == true && CF2.checked == false && CF1.checked == false && vincent.checked == false){
+        } else if (shubert.checked && !CF2.checked && !CF1.checked && !vincent.checked ){
             fcn = "shubert";
-        } else if (vincent.checked == true && CF2.checked == false && shubert.checked == false && CF1.checked == false){
+        } else if (vincent.checked && !CF2.checked && !shubert.checked && !CF1.checked ){
             fcn = "vincent";
         } else {
             // default to CF1
@@ -108,17 +113,17 @@ var load_landscape = function() {
         }
 
         // create an if-statement to choose only one box for dim
-        if(twoD.checked == true && threeD.checked == false && fourD.checked == false){
+        if(twoD.checked && !threeD.checked && !fourD.checked){
             dim = "2";
-        } else if (threeD.checked == true && twoD.checked == false && fourD.checked == false){
+        } else if (threeD.checked && !twoD.checked && !fourD.checked){
             dim = "3";
-        } else if (fourD.checked == true && threeD.checked == false && twoD.checked == false){
+        } else if (fourD.checked && !threeD.checked && !twoD.checked){
             dim = "4";
         } else {
             // default to 3D
             dim = "3";
         }
-    // end of my stuff -Lilia except will add }); later
+    // end of my stuff -Lilia
 
     var basepath = "../../tessevolve/data/"; // for web deployment
     //var basepath = "../../data/" // for local host 
@@ -253,12 +258,11 @@ var load_landscape = function() {
 
         }
     ) // end of then
-
-}); // added by Lilia
-
 }
 
 var draw = function() {
-  reload();
-  load_landscape();
+    // draw circle
+    console.log("Draw function called");
+    reload();
+    load_landscape();
 }
